@@ -43,11 +43,12 @@ h3.t{margin:0 0 10px;font-size:16px}
 #nav .nb.on{color:var(--blue);background:rgba(0,122,255,.13)}
 #nav .plus{width:54px;height:54px;border-radius:50%;padding:0;background:linear-gradient(145deg,#52a8ff,#007aff);box-shadow:0 6px 16px rgba(0,122,255,.45);display:flex;align-items:center;justify-content:center;margin-top:-12px}
 #nav .plus svg{width:26px;height:26px;stroke:#fff;stroke-width:2.6;fill:none;stroke-linecap:round}
-main,header{transition:transform .3s,filter .3s}body.sheeted>main,body.sheeted>header{transform:scale(.94);transform-origin:50% 0;filter:brightness(.93)}
+html.noscroll,html.noscroll body{overflow:hidden;overscroll-behavior:none}
 dialog{border:0;padding:8px 16px 22px;background:var(--base);color:var(--ink);position:fixed;inset:auto 8px 8px 8px;margin:0 auto;width:calc(100% - 16px);max-width:560px;max-height:92vh;overflow:auto;border-radius:32px;box-shadow:0 -10px 50px rgba(0,0,0,.25);animation:up .34s cubic-bezier(.2,.9,.25,1);transition:transform .3s,filter .3s}
 dialog::before{content:"";display:block;width:40px;height:5px;border-radius:3px;background:var(--track);margin:4px auto 10px}
-dialog.under{transform:scale(.94) translateY(-18px);filter:brightness(.9)}dialog::backdrop{background:rgba(0,0,0,.35)}
-input[type=date]{display:block;width:100%;min-width:0;max-width:100%;text-align:left}.g2>div{min-width:0}
+dialog.under{transform:scale(.97) translateY(-8px);filter:brightness(.92)}dialog::backdrop{background:rgba(0,0,0,.35)}
+input[type=date]{-webkit-appearance:none;appearance:none;display:block;box-sizing:border-box;width:100%!important;max-width:100%!important;min-width:0!important;min-height:44px;margin:3px 0 0;padding:10px 12px;text-align:left;overflow:hidden;background-color:var(--track)}
+input[type=date]::-webkit-date-and-time-value{min-width:0;margin:0;text-align:left}input[type=date]::-webkit-datetime-edit{display:block;padding:0;text-align:left}.g2>div{min-width:0}
 dialog input,dialog select,dialog textarea{min-width:0;max-width:100%}dialog .card{min-width:0;overflow:hidden}
 .fl{display:block;font-size:12px;color:var(--mut);margin:0 0 4px 2px}.g2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;margin-top:12px}.g2 select{width:100%;margin:0}
 .tg{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:14px;font-size:15px;color:var(--ink)}.tg small{color:var(--mut)}.tg input{width:22px;height:22px;margin:0;flex:none}
@@ -604,9 +605,8 @@ sheetAct=function(a,v,id,b){switch(a){
  case"csave":saveCat();return true;
  case"cdel":delCat();return true}
  return sheetAct1(a,v,id,b)};
-let SCY=0,LOCKED=false;
-function lockScroll(){if(LOCKED||typeof window==="undefined")return;LOCKED=true;SCY=window.scrollY||0;const b=document.body.style;b.position="fixed";b.top=-SCY+"px";b.left="0";b.right="0";b.width="100%"}
-function unlockScroll(){if(!LOCKED||typeof window==="undefined")return;LOCKED=false;const b=document.body.style;b.position="";b.top="";b.left="";b.right="";b.width="";window.scrollTo(0,SCY)}
+function lockScroll(){const r=document.documentElement||document.body;r.classList.add("noscroll")}
+function unlockScroll(){const r=document.documentElement||document.body;r.classList.remove("noscroll")}
 function sheetDrag(d){let y0=0,x0=0,dy=0,on=false,top=false,t0=0;
  d.addEventListener("touchstart",e=>{if(SH[SH.length-1]!==d||e.touches.length!==1)return;y0=e.touches[0].clientY;x0=e.touches[0].clientX;dy=0;on=false;top=d.scrollTop<=0;t0=Date.now()},{passive:true});
  d.addEventListener("touchmove",e=>{if(SH[SH.length-1]!==d||!y0)return;const t=e.touches[0],ddy=t.clientY-y0,ddx=t.clientX-x0;
